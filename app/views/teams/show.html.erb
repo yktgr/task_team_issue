@@ -10,7 +10,7 @@
               <%= image_tag default_img(@team.icon_url), class: 'img' %><br>
               <%= @team.name %>
             </div>
-            <%= link_to 'チーム情報を編集する', edit_team_path(@team), class: 'btn btn-success btn-block mt-3' %>
+            <%= link_to 'チーム情報を編集する',edit_team_path, class: 'btn btn-success btn-block mt-3' %>
           </div>
 
           <div class="col-md-8">
@@ -41,7 +41,9 @@
                     <tr>
                       <td><%= image_tag 'default.jpg', size: '40x40' %></td>
                       <td><%= assign.user.email %></td>
+                      <td><%= assign.user.id %></td>
                       <td><%= link_to '削除', team_assign_path(@team, assign), method: :delete, class: 'btn btn-sm btn-danger' %></td>
+                      <td><%= link_to '権限移動',owner_update_team_path(user_id: assign.user.id),method: :get, class: 'btn btn-sm btn-danger' %></td>
                     </tr>
                   <% end %>
                 </tbody>

@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_team, only: %i[show edit update destroy set_owner]
+  before_action :set_team, only: %i[show edit update destroy set_owner owner_update]
   before_action :set_owner, only: %i[edit update destroy]
 
   def index
@@ -16,7 +16,19 @@ class TeamsController < ApplicationController
     @team = Team.new
   end
 
-  def edit; end
+  def edit;
+  end
+
+  def owner_update
+    user = User.find(params[:user_id])
+    if user !=  @team.owner
+        @team.owner = user
+        @team.save
+        redirect_to @team, notice: 'リーダーを変更しました！'
+    else
+        redirect_to @team
+    end
+  end
 
   def create
     @team = Team.new(team_params)
@@ -55,7 +67,7 @@ class TeamsController < ApplicationController
   end
 
   def set_owner
-      redirect_to @team, notice:"権限がありません" unless current_user != @team.owner
+      redirect_to @team, notice:"権限がありません" unless current_user == @team.owner
   end
 
   def team_params
