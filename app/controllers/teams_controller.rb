@@ -24,6 +24,7 @@ class TeamsController < ApplicationController
     if user !=  @team.owner
         @team.owner = user
         @team.save
+        AssignMailer.info_mail(@team,user).deliver
         redirect_to @team, notice: 'リーダーを変更しました！'
     else
         redirect_to @team
