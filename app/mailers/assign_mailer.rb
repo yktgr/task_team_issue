@@ -12,4 +12,12 @@ class AssignMailer < ApplicationMailer
     @name = team.name
     mail to: @email, subject: '権限変更'
   end
+
+  def agenda_destroy_mail(title,user)
+    @email = user.email
+    @title = title
+    mail to: @email, subject: 'アジェンダを削除しました'
+  end
+
+
 end
